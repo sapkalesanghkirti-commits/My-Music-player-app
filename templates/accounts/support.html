@@ -1,0 +1,181 @@
+{% extends "songs/base.html" %}
+
+{% load static %}
+
+{% block title %}Support - Musify{% endblock title %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static "styles/playlist.css" %}">
+    <link rel="stylesheet" href="{% static "styles/home.css" %}">
+{% endblock style %}
+
+{% block script %} 
+<script src="{% static "scripts/home.js" %}" defer></script>
+<script src="{% static "scripts/player.js" %}" defer></script>
+<script src="{% static "scripts/like_dislike_songs.js" %}" defer></script>
+{% endblock script %}
+
+{% block body %}
+
+{% comment %}  {% endcomment %}
+<style>
+    :root {
+        --spotify-black:#1a2a5a;
+        --spotify-light-black:#181818; ;
+        --text-grey: #b3b3b3;
+        --accent-aqua: #6366f1;
+
+    }
+
+    .main-container {
+        background: linear-gradient(to bottom, #222, var(--spotify-black));
+        color: white;
+        padding: 20px 7px5px;
+        min-height: 100vh;
+    }
+
+    /* Hero Section */
+    .support-hero {
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+    .support-hero h1 {
+        font-size: 48px;
+        color: var(--accent-aqua);
+        margin-bottom: 20px;
+    }
+
+    .search-box {
+        max-width: 500px;
+        margin: 0 auto;
+        display: flex;
+        background: white;
+        border-radius: 50px;
+        overflow: hidden;
+        padding: 5px;
+    }
+
+    .search-box input {
+        border: none;
+        padding: 12px 20px;
+        flex: 1;
+        outline: none;
+    }
+
+    /* FAQ Cards */
+    .faq-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin: 40px 0;
+    }
+
+    .faq-card {
+        background: var(--spotify-light-black);
+        padding: 25px;
+        border-radius: 8px;
+        transition: background 0.3s;
+        border: 1px solid #282828;
+    }
+
+    .faq-card:hover {
+        background: #282828;
+    }
+
+    .faq-card h3 { color: var(--accent-aqua); margin-top: 0; }
+    .faq-card p { color: var(--text-grey); font-size: 14px; }
+
+    /* Contact Form */
+    .contact-container {
+        background: var(--spotify-light-black);
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 40px;
+        border-radius: 12px;
+    }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; margin-bottom: 8px; color: var(--text-grey); }
+    
+    .form-group input, .form-group textarea, .form-group select {
+        width: 100%;
+        padding: 12px;
+        background: #3e3e3e;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        color: white;
+    }
+
+    .form-group input:focus { border-color: var(--accent-aqua); outline: none; }
+
+    .submit-btn {
+        background: var(--accent-aqua);
+        color: black;
+        font-weight: bold;
+        padding: 14px 30px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    .submit-btn:hover { transform: scale(1.05); }
+</style>
+
+<div class="main-container">
+    <!-- Hero Header -->
+    <div class="support-hero">
+        <h1>How can we help?</h1>
+        <div class="search-box">
+            <input type="text" placeholder="Search for help articles...">
+        </div>
+    </div>
+
+    <!-- Quick Help Topics -->
+    <div class="faq-section">
+        <div class="faq-card">
+            <h3>Account Help</h3>
+            <p>Issues with logging in, changing password, or profile settings.</p>
+        </div>
+        <div class="faq-card">
+            <h3>Subscription</h3>
+            <p>Details about MusiFy Premium, billing, and cancellations.</p>
+        </div>
+        <div class="faq-card">
+            <h3>Playback</h3>
+            <p>Troubleshooting audio quality or device connection issues.</p>
+        </div>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="contact-container">
+        <h2 style="margin-top:0">Contact Support</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" name="name" required>
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label>What's the issue?</label>
+                <select name="subject">
+                    <option>Technical Issue</option>
+                    <option>Billing</option>
+                    <option>Feedback</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Message</label>
+                <textarea name="message" rows="5"></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+    </div>
+</div>
+<br><br><br>
+{% endblock body %}
