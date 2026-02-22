@@ -76,7 +76,7 @@ def profile(request):
         user.save()
 
         if image:
-            default = '/user.png'
+            default = 'user.png'
             old_image = user.useraccountmodel.profileImage.path
             user_acc = user.useraccountmodel
             user_acc.profileImage = image

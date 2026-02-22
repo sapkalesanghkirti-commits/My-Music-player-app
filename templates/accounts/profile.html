@@ -83,7 +83,7 @@
   <div class="artist">
       <img src="{{ request.user.useraccountmodel.profileImage.url }}" alt="">
       <div class="content">
-          <h2 class="name">{{ request.user.first_name }}</h2>
+          <h2 class="name">{{ request.user.username }}</h2>
           <p class="followers-count">{{ request.user.following.count }} Following &nbsp;&nbsp;{% if creator %}{{request.user.artistmodel.followers.all.count}} Followers {% endif %}</p>
       </div>
       <div class="mark">Edit</div>
@@ -95,7 +95,7 @@
     {% csrf_token %}
     <div class="in edit-name">
       <label for="name-upload">Name: </label>
-      <input name="name" id="name-upload" type="text" value="{{ request.user.first_name }}">
+      <input name="name" id="name-upload" type="text" value="{{ request.user.username }}">
     </div>
     <div class="in edit-image">
       <label for="image-upload">Profile Image: </label>     
