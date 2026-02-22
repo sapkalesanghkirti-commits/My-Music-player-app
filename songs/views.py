@@ -11,18 +11,18 @@ from django.db.models import Q
 
 @login_required(login_url='login')
 def home(request):
-    songs = SongModel.objects.all().order_by('?')[:12]
+    songs = SongModel.objects.all().order_by('?')[:10]
     ran_songs=SongModel.objects.order_by('?')[:12]
 
 
-    artists = ArtistModel.objects.all().order_by('?')[:7]
-    movies = MoviesModel.objects.all().order_by('?')[:6]
-    random_songs = SongModel.objects.order_by('?')[:10]
+    # artists = ArtistModel.objects.all().order_by('?')[:7]
+    movies = MoviesModel.objects.all().order_by('?')[:9]
+    random_songs = SongModel.objects.order_by('?')[:11]
 
     return render(request, 'songs/home.html', {
         'songs': songs,
         'ran_songs':ran_songs,
-        'artists': artists,
+        # 'artists': artists,
         'movies': movies,
         'random_songs': random_songs
 
