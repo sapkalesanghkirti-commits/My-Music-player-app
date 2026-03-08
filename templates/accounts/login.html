@@ -7,37 +7,203 @@
     <script src="{% static "scripts/login.js" %}" defer></script>
 {% endblock scripts %}
 
-{% block body %}
+{% block script %} 
+<script src="{% static "scripts/home.js" %}" defer></script>
+<script src="{% static "scripts/player.js" %}" defer></script>
+{% endblock script %}
 
+
+{% block body %}
 <style>
-    .hide{
+    :root {
+        --bg-dark: #0a1626;
+        --card-dark: rgba(10, 22, 38, 0.85);
+        --accent-cyan: #00f2ff;
+        --glow-cyan: rgba(0, 242, 255, 0.3);
+        --border-light: rgba(0, 242, 255, 0.25);
+        --text-light: #e0f7fa;
+        --error-red: #ff4d4d;
+        --hover-glow: rgba(0, 242, 255, 0.6);
+    }
+
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background: radial-gradient(circle at center, #081224 0%, var(--bg-dark) 100%);
+        color: var(--text-light);
+    }
+
+    .hide {
         display: none;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 90vh;
+        padding: 20px;
+    }
+
+    /* Glass Form Box */
+    .form-box {
+        width: 100%;
+        max-width: 420px;
+        padding: 50px 40px;
+        background: var(--card-dark);
+        backdrop-filter: blur(15px);
+        border-radius: 24px;
+        border: 2px solid var(--border-light);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.7),
+                    0 0 15px var(--glow-cyan);
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .form-box:hover {
+        border-color: var(--hover-glow);
+        box-shadow: 0 25px 45px rgba(0,0,0,0.8),
+                    0 0 25px var(--hover-glow);
+        transform: translateY(-5px);
+    }
+
+    h1 {
+        font-size: 30px;
+        margin-bottom: 35px;
+        font-weight: 900;
+        color: #fff;
+        text-shadow: 0 0 10px var(--glow-cyan), 0 0 20px rgba(0,242,255,0.2);
+    }
+
+    .input-box {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .input-box label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #8fa3ad;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .input-box input {
+        width: 100%;
+        padding: 14px 16px;
+        border-radius: 12px;
+        border: 1px solid #1f334b;
+        background: rgba(5, 10, 20, 0.9);
+        color: var(--text-light);
+        font-size: 15px;
+        transition: all 0.3s ease-in-out;
+        box-sizing: border-box;
+    }
+
+    .input-box input:focus {
+        outline: none;
+        border: 2px solid var(--accent-cyan);
+        box-shadow: 0 0 12px var(--glow-cyan), inset 0 0 5px rgba(0,242,255,0.1);
+        background: rgba(8, 18, 34, 0.95);
+        transform: scale(1.02);
+    }
+
+    /* Shiny Button */
+    button {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        padding: 16px;
+        margin-top: 20px;
+        background: linear-gradient(45deg, #00f2ff, #00aaff);
+        color: #050a14;
+        border: none;
+        border-radius: 50px;
+        font-size: 16px;
+        font-weight: 800;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: all 0.4s ease;
+    }
+
+    button::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 50%;
+        height: 200%;
+        background: rgba(255, 255, 255, 0.15);
+        transform: rotate(25deg);
+        transition: all 0.6s ease;
+    }
+
+    button:hover::before {
+        left: 120%;
+    }
+
+    button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 25px var(--accent-cyan), 0 0 50px rgba(0,242,255,0.3);
+    }
+
+    p {
+        margin-top: 25px;
+        color: #8fa3ad;
+        font-size: 14px;
+    }
+
+    a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+        font-weight: 700;
+        transition: 0.3s;
+    }
+
+    a:hover {
+        text-shadow: 0 0 8px var(--accent-cyan);
+        text-decoration: underline;
+    }
+
+    .error-field {
+        margin-top: 0;
+        font-size: 14px;
+        color: var(--error-red);
+    }
+
+    @media (max-width: 480px) {
+        .form-box {
+            padding: 30px 20px;
+            border: 1px solid var(--border-light);
+            backdrop-filter: blur(10px);
+        }
     }
 </style>
 
+<div class="container">
+    <div class="form-box">
+        <h1>Log in to MusiFy</h1>
+        <form class="login" action="" method="post">
+            {% csrf_token %}
+            <div class="input-box">
+                <label for="username">Username</label>
+                <input id="username" name="username" type="text" placeholder="Enter your username">
+            </div>
+            <div class="input-box">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" placeholder="Enter your password">
+            </div>
 
-    <div class="container">
-        <div class="form-box">
-            <h1>Log in to MusiFy</h1>
-            <form class="login" action="" method="post">
-                {% csrf_token %}
-                <div class="input-box">
-                    <label for="">Username</label>
-                    <input id="username" name="username" type="text" placeholder="Username">
-                </div>
-                <div class="input-box">
-                    <label for="">Password</label>
-                    <input id="password" name="password" type="password" placeholder="Password">
-                </div>
-                <p style="color: red;" class="error-field hide"></p>
-                {% if invalid %}
-                    <p style="color: red;">Username or Password incorrect!</p>
-                {% endif %}
-                <button type="submit">Log In</button>
-            </form>
-            <p>Don't have an account?  <a href="{% url "signup" %}"> Sign up for MusiFy</a></p>
-        </div>
+            <p class="error-field hide"></p>
+            {% if invalid %}
+                <p class="error-field">Username or Password incorrect!</p>
+            {% endif %}
+
+            <button type="submit">Log In</button>
+        </form>
+        <p>Don't have an account? <a href="{% url 'signup' %}">Sign up for MusiFy</a></p>
     </div>
-
-
+</div>
 {% endblock body %}
