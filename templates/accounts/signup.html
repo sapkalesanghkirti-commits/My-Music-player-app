@@ -1,5 +1,4 @@
 {% extends "accounts/base.html" %}
-
 {% load static %}
 
 {% block title %}Signup | MusiFy{% endblock title %}
@@ -9,49 +8,205 @@
 {% endblock scripts %}
 
 {% block body %}
-
 <style>
-    .hide{
-        display: none;
+    :root {
+        --bg-dark: #0a1626;
+        --card-dark: rgba(10, 22, 38, 0.85);
+        --accent-cyan: #00f2ff;
+        --glow-cyan: rgba(0, 242, 255, 0.3);
+        --border-light: rgba(0, 242, 255, 0.25);
+        --text-light: #e0f7fa;
+        --error-red: #ff4d4d;
+        --hover-glow: rgba(0, 242, 255, 0.6);
+    }
+
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background: radial-gradient(circle at center, #081224 0%, var(--bg-dark) 100%);
+        color: var(--text-light);
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    /* Glass Card with Depth */
+    .form-box {
+        width: 100%;
+        max-width: 450px;
+        padding: 50px 40px;
+        background: var(--card-dark);
+        backdrop-filter: blur(15px);
+        border-radius: 24px;
+        border: 2px solid var(--border-light);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.7),
+                    0 0 15px var(--glow-cyan);
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+
+    .form-box:hover {
+        border-color: var(--hover-glow);
+        box-shadow: 0 25px 45px rgba(0,0,0,0.8),
+                    0 0 25px var(--hover-glow);
+        transform: translateY(-5px);
+    }
+
+    h1 {
+        font-size: 30px;
+        margin-bottom: 30px;
+        font-weight: 900;
+        color: #fff;
+        text-shadow: 0 0 10px var(--glow-cyan), 0 0 20px rgba(0,242,255,0.2);
+    }
+
+    .input-box {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .input-box label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #8fa3ad;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .input-box input {
+        width: 100%;
+        padding: 14px 16px;
+        border-radius: 12px;
+        border: 1px solid #1f334b;
+        background: rgba(5, 10, 20, 0.9);
+        color: #e0f7fa;
+        font-size: 15px;
+        transition: all 0.3s ease-in-out;
+        box-sizing: border-box;
+    }
+
+    .input-box input:focus {
+        outline: none;
+        border: 2px solid var(--accent-cyan);
+        box-shadow: 0 0 12px var(--glow-cyan), inset 0 0 5px rgba(0,242,255,0.1);
+        background: rgba(8, 18, 34, 0.95);
+        transform: scale(1.02);
+    }
+
+    button {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        padding: 16px;
+        margin-top: 20px;
+        background: linear-gradient(45deg, #00f2ff, #00aaff);
+        color: #050a14;
+        border: none;
+        border-radius: 50px;
+        font-size: 16px;
+        font-weight: 800;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: all 0.4s ease;
+    }
+
+    button::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 50%;
+        height: 200%;
+        background: rgba(255, 255, 255, 0.15);
+        transform: rotate(25deg);
+        transition: all 0.6s ease;
+    }
+
+    button:hover::before {
+        left: 120%;
+    }
+
+    button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 25px var(--accent-cyan), 0 0 50px rgba(0,242,255,0.3);
+    }
+
+    p {
+        margin-top: 25px;
+        color: #8fa3ad;
+        font-size: 14px;
+    }
+
+    a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+        font-weight: 700;
+        transition: 0.3s;
+    }
+
+    a:hover {
+        text-shadow: 0 0 8px var(--accent-cyan);
+    }
+
+    .error-field {
+        margin-top: 0;
+        font-size: 14px;
+    }
+
+    @media (max-width: 480px) {
+        .form-box {
+            padding: 30px 20px;
+            border: 1px solid var(--border-light);
+            backdrop-filter: blur(10px);
+        }
     }
 </style>
+<br><br><br><br><br>
+<div class="container">
+    <div class="form-box">
+        <h1>Create Your Account</h1>
 
-    <div class="container">
-        <div class="form-box">
-            <h1>Sign up to start listening</h1>
-            {% if error %}
-                    <p style="color: red;">{{ error }}</p>
-            {% endif %}
-            <form action="" method="post">
-                {% csrf_token %}
-                <div class="input-box">
-                    <label for="name">Name</label>
-                    <input type="text" placeholder="Name" id="name" name="name" value="{{ name }}">
-                </div>
-                <div class="input-box">
-                    <label for="email">Email</label>
-                    <input type="text" placeholder="Email" id="email" name="email" value="{{ email }}">
-                </div>
-                <div class="input-box">
-                    <label for="username">Username</label>
-                    <input type="text" placeholder="Username" id="username" name="username" value="{{ username }}">
-                </div>
-                <div class="input-box">
-                    <label for="password1">Password</label>
-                    <input type="password" placeholder="Password" id="password1" name="password1">
-                </div>
-                <div class="input-box">
-                    <label for="password2">Confirm Password</label>
-                    <input type="password" placeholder="Confirm Password" id="password2" name="password2">
-                </div>
-                {% if error %}
-                    <p style="color: red;">{{ error }}</p>
-                {% endif %}
-                <p style="color: red;" class="error-field hide"></p>
-                <button type="submit">Sign Up</button>
-            </form>
-            <p>Already have an account?<a href="{% url "login" %}"> Log in here.</a></p>
-        </div>
+        {% if error %}
+            <p class="error-field" style="color: var(--error-red);">{{ error }}</p>
+        {% endif %}
+
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="input-box">
+                <label for="name">Name</label>
+                <input type="text" placeholder="Your Name" id="name" name="name" value="{{ name }}">
+            </div>
+            <div class="input-box">
+                <label for="email">Email</label>
+                <input type="text" placeholder="Email address" id="email" name="email" value="{{ email }}">
+            </div>
+            <div class="input-box">
+                <label for="username">Username</label>
+                <input type="text" placeholder="Username" id="username" name="username" value="{{ username }}">
+            </div>
+            <div class="input-box">
+                <label for="password1">Password</label>
+                <input type="password" placeholder="Create a password" id="password1" name="password1">
+            </div>
+            <div class="input-box">
+                <label for="password2">Confirm Password</label>
+                <input type="password" placeholder="Repeat your password" id="password2" name="password2">
+            </div>
+
+            <p class="error-field hide"></p>
+
+            <button type="submit">Sign Up</button>
+        </form>
+
+        <p>Already have an account? <a href="{% url 'login' %}">Log in here.</a></p>
     </div>
-    
+</div>
+
 {% endblock body %}
